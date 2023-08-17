@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -15,7 +15,7 @@
     <Description>Azure-AI-Community package for Azure OpenAI</Description>
     <PackageReleaseNotes>https://github.com/Azure-AI-Community/OpenAI-BotBuilder/blob/main/README.md</PackageReleaseNotes>
     <Version>1.0.7</Version>
-    <Authors>AzureAI.Community-Vinoth Rajendran</Authors>
+    <Authors>AzureAI.Community</Authors>
     <PackageLicenseUrl>https://github.com/Azure-AI-Community</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <ContentTargetFolders>content</ContentTargetFolders>
@@ -37,6 +37,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>
