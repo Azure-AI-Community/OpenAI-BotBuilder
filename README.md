@@ -35,9 +35,9 @@ Prompt Completions: Returns textual completions as configured for a given prompt
 
 ### Example
 
-- Endpoint: https://github.com/Azure-AI-Community/OpenAI-BotBuilder
-- API Key: 123131asdasd2132132
-- Deployment or Model Name: davinici
+- **Endpoint:** https://github.com/Azure-AI-Community/OpenAI-BotBuilder
+- **API Key:** 123131asdasd2132132
+- **Deployment or Model Name:** davinici
 
 #### Prompt Configuration
 
@@ -81,9 +81,9 @@ To obtain the result, utilize `${turn.OpenAI}`.
 
 ## Example
 
-- **Endpoint:** [GitHub Repository](https://github.com/Azure-AI-Community/OpenAI-BotBuilder)
+- **Endpoint:** https://github.com/Azure-AI-Community/OpenAI-BotBuilder
 - **API Key:** 123131asdasd2132132
-- **Deployment or Model Name:** davinici
+- **Deployment or Model Name:** GPT4
 
 ### Prompt Chat Configuration
 
