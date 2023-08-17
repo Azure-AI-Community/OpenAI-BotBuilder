@@ -1,4 +1,4 @@
-# AzureAI.Community.OpenAI.Bot.Builder.Prompt
+# AzureAI.Community.OpenAI.Bot.Builder.Prompt - Preview
 
 ## Description
 
