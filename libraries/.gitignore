@@ -15,9 +15,7 @@ build/
 [Oo]bj/
 
 # Visual Studio code files
-*.csproj
 *.userprefs
-*.sln
 *.vs/
 *.vssscc
 *.vspscc

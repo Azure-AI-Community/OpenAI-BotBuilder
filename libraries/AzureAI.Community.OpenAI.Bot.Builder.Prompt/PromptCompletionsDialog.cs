@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AdaptiveExpressions.Properties;
+using AzureAI.Community.OpenAI.Bot.Builder.Prompt.ConnectOpenAI;
 using AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -10,29 +11,37 @@ using Newtonsoft.Json.Linq;
 
 namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
 {
-    //Prompt Engineering in Bot Builder
-    public class OpenAIPromptDialog : Dialog
+    /// <summary>
+    /// Prompt completions dialog.
+    /// </summary>
+    public class PromptCompletionsDialog : Dialog
     {
-        public OpenAIPromptDialog([CallerFilePath] string sourceFilePath = "",
-            [CallerLineNumber] int sourceLineNumber = 0) : base()
+        public PromptCompletionsDialog([CallerFilePath] string sourceFilePath = "", [CallerLineNumber] 
+            int sourceLineNumber = 0) : base()
         {
             RegisterSourceLocation(sourceFilePath, sourceLineNumber);
         }
 
-        [JsonProperty("$Kind")] public const string Kind = "OpenAIPromptDialog";
+        [JsonProperty("$Kind")]
+        public const string Kind = "PromptCompletionsDialog";
 
-        [JsonProperty("EndPoint")] public StringExpression EndPoint { get; set; }
+        [JsonProperty("EndPoint")]
+        public StringExpression EndPoint { get; set; }
 
-        [JsonProperty("ApiKey")] public StringExpression ApiKey { get; set; }
+        [JsonProperty("ApiKey")]
+        public StringExpression ApiKey { get; set; }
 
         [JsonProperty("DeploymentOrModelName")]
         public StringExpression DeploymentOrModelName { get; set; }
 
-        [JsonProperty("PromptConfiguration")] public StringExpression PromptConfiguration { get; set; }
+        [JsonProperty("PromptConfiguration")]
+        public StringExpression PromptConfiguration { get; set; }
 
-        [JsonProperty("ErrorProperty")] public StringExpression ErrorProperty { get; set; }
+        [JsonProperty("ErrorProperty")]
+        public StringExpression ErrorProperty { get; set; }
 
-        [JsonProperty("resultProperty")] public StringExpression ResultProperty { get; set; }
+        [JsonProperty("resultProperty")]
+        public StringExpression ResultProperty { get; set; }
 
         public override async Task<DialogTurnResult> BeginDialogAsync(DialogContext dc, object options = null,
             CancellationToken cancellationToken = new CancellationToken())
@@ -42,7 +51,7 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
             var endPoint = EndPoint?.GetValue(dc.State);
             if (endPoint == null)
             {
-                SetResult(dc.Context, false, error: "Endpoint should not be empty.");
+                SetResult(dc.Context, false, error:"Endpoint should not be empty.");
                 return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
             }
 
@@ -69,7 +78,7 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
             }
 
             var promptConfig = new PromptGenerator();
-            var promptOptions = promptConfig.GenerateOptions("GetCompletionsAsync", getPromptConfig);
+            var promptOptions = promptConfig.GenerateCompletionsOptions(getPromptConfig);
 
             if (promptOptions == null)
             {
@@ -77,16 +86,23 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
                 return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
             }
 
-            var openAI = new ConnectOpenAI.OpenAI(endPoint, apiKeyValue, deploymentValue);
+            var openAI = new OpenAIPrompt(endPoint, apiKeyValue, deploymentValue);
 
-            var jResult = await openAI.InvokeAsync(promptOptions.Value.invoke, promptOptions.Value.options);
+            var jResult  = await openAI.InvokeAsync("GetCompletionsAsync", promptOptions);
 
             SetResult(dc.Context, true, jResult);
 
             return await dc.EndDialogAsync(result: result, cancellationToken: cancellationToken);
         }
 
-        private void SetResult(ITurnContext turnContext, bool success, JObject result = null, string error = "")
+        /// <summary>
+        /// Set the result in turn state
+        /// </summary>
+        /// <param name="turnContext"></param>
+        /// <param name="success"></param>
+        /// <param name="result"></param>
+        /// <param name="error"></param>
+        private void SetResult(ITurnContext turnContext,bool success,JObject result=null,string error="")
         {
             var conversationExpire = new
             {

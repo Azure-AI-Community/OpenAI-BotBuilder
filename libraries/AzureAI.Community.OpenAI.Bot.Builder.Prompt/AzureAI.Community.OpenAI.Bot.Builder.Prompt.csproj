@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>AzureAI.Community.OpenAI.Bot.Builder.Prompt</Title>
+    <PackAsTool>False</PackAsTool>
+    <PackageTags>composer;botframework;botbuilder;msbot-component;msbot-action</PackageTags>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Company>Azure.AI.Community</Company>
+    <PackageIcon>azureai.jpeg</PackageIcon>
+    <PackageId>AzureAI.Community.OpenAI.Bot.Builder.Prompt</PackageId>
+    <RepositoryUrl>https://github.com/Azure-AI-Community/OpenAI-BotBuilder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Azure-AI-Community</PackageProjectUrl>
+    <Description>Azure-AI-Community package for Azure OpenAI</Description>
+    <PackageReleaseNotes>https://github.com/Azure-AI-Community/OpenAI-BotBuilder/blob/main/README.md</PackageReleaseNotes>
+    <Version>1.0.7</Version>
+    <Authors>AzureAI.Community-Vinoth Rajendran</Authors>
+    <PackageLicenseUrl>https://github.com/Azure-AI-Community</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <Copyright>Azure AI Community - Vinoth Rajendran</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.6" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="**/*.schema" />
+    <Content Include="**/*.uischema" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="azureai.jpeg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

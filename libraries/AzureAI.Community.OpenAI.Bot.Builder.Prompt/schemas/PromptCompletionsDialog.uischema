@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "form": {
+    "label": "OpenAI - Prompt Completions",
+    "subtitle": "Send Activity",
+    "helpLink": "https://aka.ms/bfc-send-activity"
+  },
+  "menu": {
+    "label": "Prompt Completions",
+    "submenu": [ "Azure OpenAI" ]
+  },
+  "flow": {
+    "widget": "ActionCard",
+    "header": {
+      "widget": "ActionHeader",
+      "icon": "MessageBot",
+      "colors": {
+        "theme": "#ADD8E6",
+        "icon": "#5C2E91"
+      }
+    }
+  }
+}

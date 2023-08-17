@@ -5,8 +5,16 @@ using Azure.AI.OpenAI;
 
 namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
 {
+    /// <summary>
+    /// Prompt Generator class to generate prompt options
+    /// </summary>
     public class PromptGenerator
     {
+        /// <summary>
+        ///  Check if required parameters are present in the json string
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
         public (string IsError, JsonElement? root) CheckRequiredParameterIsPresent(string jsonString)
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
@@ -24,7 +32,12 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
             return (string.Empty, root);
         }
 
-        public (string invoke, CompletionsOptions options)? GenerateOptions(string invoke, string jsonString)
+        /// <summary>
+        ///  Generate CompletionsOptions object from json string
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
+        public CompletionsOptions GenerateCompletionsOptions(string jsonString)
         {
             using JsonDocument doc = JsonDocument.Parse(jsonString);
             JsonElement root = doc.RootElement;
@@ -38,26 +51,39 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
                 return null;
             }
 
-            //string invoke = GetInvokeType(root);
+            CompletionsOptions completionsOptions = GetCompletionsOptions(root);
 
-            if (string.IsNullOrEmpty(invoke))
-                return null;
-
-            CompletionsOptions completionsOptions = null;
-
-            switch (invoke)
-            {
-                case "GetCompletionsAsync":
-                    completionsOptions = GetCompletionsOptions(root);
-                    break;
-                case "GetChatCompletionsAsync":
-                    break;
-            }
-
-
-            return (invoke, completionsOptions);
+            return completionsOptions;
         }
 
+        /// <summary>
+        /// Generate ChatCompletionsOptions object from json string
+        /// </summary>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
+        public ChatCompletionsOptions GenerateChatCompletionsOptions(string jsonString)
+        {
+            using JsonDocument doc = JsonDocument.Parse(jsonString);
+            JsonElement root = doc.RootElement;
+
+            var missingParameters = CheckMissingParameters(root, "ChatMessages");
+
+            if (missingParameters.Count > 0)
+            {
+                Console.WriteLine($"Missing parameters: {string.Join(", ", missingParameters)}");
+                return null;
+            }
+
+            ChatCompletionsOptions chatCompletionsOptions = GetChatCompletionsOptions(root);
+            return chatCompletionsOptions;
+        }
+
+        /// <summary>
+        /// Check if required parameters are present in the json string
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         private List<string> CheckMissingParameters(JsonElement root, params string[] parameters)
         {
             List<string> missingParameters = new List<string>();
@@ -68,10 +94,82 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
                     missingParameters.Add(parameter);
                 }
             }
-
             return missingParameters;
         }
 
+        /// <summary>
+        /// Prepare ChatCompletionsOptions object from json string
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        private static ChatCompletionsOptions GetChatCompletionsOptions(JsonElement root)
+        {
+            var chatMessage = GenerateChatMessage(root, "ChatMessages");
+
+            if (chatMessage.Count <= 0)
+                return null;
+
+            var chatCompletionsOptions = new ChatCompletionsOptions();
+
+            foreach (var chatMsg in chatMessage)
+            {
+                chatCompletionsOptions.Messages.Add(chatMsg);
+            }
+
+            if (root.TryGetProperty("ChoiceCount", out var generationSampleCount))
+                chatCompletionsOptions.ChoiceCount = generationSampleCount.GetInt32();
+
+            if (root.TryGetProperty("Temperature", out var temperature))
+                chatCompletionsOptions.Temperature = temperature.GetSingle();
+
+            if (root.TryGetProperty("User", out var user))
+                chatCompletionsOptions.User = user.GetString();
+
+            if (root.TryGetProperty("MaxTokens", out var maxTokens))
+                chatCompletionsOptions.MaxTokens = maxTokens.GetInt32();
+
+            if (root.TryGetProperty("TokenSelectionBiases", out var tokenSelectionBiases))
+            {
+                var tokenBiases = GetDictionaryPropertyOrDefault(tokenSelectionBiases);
+
+                if (tokenBiases?.Count > 0)
+                {
+                    foreach (var tokenBiase in tokenBiases)
+                    {
+                        chatCompletionsOptions.TokenSelectionBiases.Add(tokenBiase.Key, tokenBiase.Value);
+                    }
+                }
+            }
+
+            if (root.TryGetProperty("StopSequences", out var stopSequences))
+            {
+                var stopDictionary = GetListPropertyOrDefault(stopSequences);
+                if (stopDictionary?.Count > 0)
+                {
+                    foreach (var stop in stopDictionary)
+                    {
+                        chatCompletionsOptions.StopSequences.Add(stop);
+                    }
+                }
+            }
+
+            if (root.TryGetProperty("FrequencyPenalty", out var frequencyPenalty))
+                chatCompletionsOptions.FrequencyPenalty = frequencyPenalty.GetSingle();
+
+            if (root.TryGetProperty("NucleusSamplingFactor", out var nucleusSamplingFactor))
+                chatCompletionsOptions.NucleusSamplingFactor = nucleusSamplingFactor.GetSingle();
+
+            if (root.TryGetProperty("PresencePenalty", out var presencePenalty))
+                chatCompletionsOptions.PresencePenalty = presencePenalty.GetSingle();
+
+            return chatCompletionsOptions;
+        }
+
+        /// <summary>
+        /// Prepare CompletionsOptions object from json string
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
         private static CompletionsOptions GetCompletionsOptions(JsonElement root)
         {
             var prompts = GetListPropertyOrDefault(root, "Prompts", new List<string>());
@@ -144,6 +242,11 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
             return requestOptions;
         }
 
+        /// <summary>
+        /// Get the InvokeType from the json string
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
         private static string GetInvokeType(JsonElement root)
         {
             string invoke = null;
@@ -155,6 +258,11 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
             return string.IsNullOrEmpty(invoke) ? null : invoke;
         }
 
+        /// <summary>
+        /// Get the list of strings from the json string
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         private static List<string> GetListPropertyOrDefault(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Array)
@@ -166,13 +274,16 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
                     if (!string.IsNullOrEmpty(addItem))
                         result.Add(addItem);
                 }
-
                 return result;
             }
-
             return null;
         }
 
+        /// <summary>
+        /// Get the dictionary of int, int from the json string
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         private static Dictionary<int, int> GetDictionaryPropertyOrDefault(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Object)
@@ -184,15 +295,19 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
                     int value = item.Value.GetInt32();
                     result.Add(key, value);
                 }
-
                 return result;
             }
-
             return null;
         }
 
-        private static List<string> GetListPropertyOrDefault(JsonElement element, string propertyName,
-            List<string> defaultValue)
+        /// <summary>
+        /// Get the list of strings from the json string
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        private static List<string> GetListPropertyOrDefault(JsonElement element, string propertyName, List<string> defaultValue)
         {
             if (element.TryGetProperty(propertyName, out var property))
             {
@@ -203,11 +318,53 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt.PromptConfig
                     if (!string.IsNullOrEmpty(addItem))
                         result.Add(addItem);
                 }
-
                 return result;
             }
-
             return defaultValue;
+        }
+
+        /// <summary>
+        /// Prepare ChatMessage object from json string
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        private static List<ChatMessage> GenerateChatMessage(JsonElement element, string propertyName)
+        {
+            List<ChatMessage> chatMessages = new List<ChatMessage>();
+
+            if (element.TryGetProperty(propertyName, out var property))
+            {
+                foreach (var item in property.EnumerateArray())
+                {
+                    var text = item.GetProperty("Text").GetString();
+                    var sender = item.GetProperty("Sender").GetString();
+
+                    if (sender != null && IsCategory(sender))
+                    {
+                        sender = sender.ToLower();
+                        chatMessages.Add(new ChatMessage(new ChatRole(sender), text));
+                    }
+                }
+            }
+
+            return chatMessages;
+        }
+
+        /// <summary>
+        /// Check if the value is a valid category
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static bool IsCategory(string value)
+        {
+            value = value.ToLower();
+
+            return string.CompareOrdinal(ChatRole.Assistant.ToString(), value) == 0 ||
+                   string.CompareOrdinal(ChatRole.System.ToString(), value) == 0 ||
+                   string.CompareOrdinal(ChatRole.User.ToString(), value) == 0 ||
+                   string.CompareOrdinal(ChatRole.Function.ToString(), value) == 0;
         }
     }
 }
+

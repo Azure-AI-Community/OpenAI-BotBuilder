@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Prompt Completion",
+  "description": "Azure OpenAI - Prompt Completion",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "EndPoint": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Prompt EndPoint",
+      "description": "API interaction URL for Azure OpenAI.",
+      "examples": [
+        "https://www.azureopenai.com"
+      ]
+    },
+    "ApiKey": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "ApiKey",
+      "description": "Secure access pass for OpenAI",
+      "examples": [
+        "e0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5"
+      ]
+    },
+    "DeploymentOrModelName": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "DeploymentOrModelName",
+      "description": "Model Identifier or Deployment Name in Azure OpenAI.",
+      "examples": [
+        "davinici"
+      ]
+    },
+    "PromptConfiguration": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Prompt Configuration",
+      "description": "Configuration settings for input prompts.",
+      "examples": [
+        {
+          "ChatMessages": [
+            {
+              "Text": "Hello, how are you?",
+              "Sender": "user"
+            },
+            {
+              "Text": "I'm fine, thank you. And you?",
+              "Sender": "bot"
+            }
+          ],
+          "GenerationSampleCount": 3,
+          "Temperature": 0.75
+        }
+      ]
+    }
+  }
+}

@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
 {
-    public class BotPromptComponent : BotComponent
+    public class AzureOpenAIBotPromptComponent : BotComponent
     {
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
@@ -21,7 +21,10 @@ namespace AzureAI.Community.OpenAI.Bot.Builder.Prompt
             }
 
             services.AddSingleton<DeclarativeType>(sp =>
-            new DeclarativeType<OpenAIPromptDialog>(OpenAIPromptDialog.Kind));
+            new DeclarativeType<PromptCompletionsDialog>(PromptCompletionsDialog.Kind));
+
+            services.AddSingleton<DeclarativeType>(sp =>
+                new DeclarativeType<PromptChatCompletionsDialog>(PromptChatCompletionsDialog.Kind));
         }
     }
 }
