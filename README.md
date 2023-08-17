@@ -52,7 +52,7 @@ Here's a complete config structure example:
     "Prompts": ["prompt1", "prompt2"],
     "GenerationSampleCount": 3,
     "Temperature": 0.75,
-    "User": "AzureSDKOpenAITests",
+    "User": "AzureAICommunityUser",
     "Echo": true,
     "LogProbabilityCount": 1,
     "MaxTokens": 512,
@@ -108,7 +108,7 @@ Here is a complete config structure:
         "40058": -100,
         "15991": -100
     },
-    "User": "AzureSDKOpenAITests",
+    "User": "AzureAICommunityUser",
     "ChatMessages": [
         {
             "Text": "Hello, how are you?",
