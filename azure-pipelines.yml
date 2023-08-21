@@ -1,4 +1,10 @@
 # ASP.NET
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    feedsToUse: 'select'
+    vstsFeed: 'f04e1faa-03b1-43cf-9117-55147f23327d'
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
