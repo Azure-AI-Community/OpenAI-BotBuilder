@@ -22,11 +22,13 @@ Follow these steps to install the component:
 2. Change the filter to Community packages.
 3. Search for 'AzureAI' and install `AzureAI.Community.OpenAI.Bot.Builder.Prompt`.
 
-   ![Installation](https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/a61dd869-c010-4bda-8662-396282c3427a)
+   <img width="1175" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/132cfb64-e357-43cc-b346-6e0c32c7e946">
+
 
 After installing the package, you will find Azure OpenAI menus available in the main menu.
 
-<img width="327" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/e3435775-a340-4ce4-9979-3f9f4f673e0f">
+<img width="419" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/c5be9020-98e0-4df7-9baf-d9073771e0cb">
+
 
 
 
