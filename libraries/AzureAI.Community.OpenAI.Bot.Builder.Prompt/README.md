@@ -8,6 +8,7 @@ Currently, the following Prompts are available:
 
 1. [Prompt Completions](#prompt-completions)
 2. [Prompt ChatCompletions](#prompt-chatcompletions)
+3. [DALL-E](#DALL-E)
 
 ## Changes for Bot Composer Target Framework NET 7.0
 
@@ -25,7 +26,9 @@ Follow these steps to install the component:
 
 After installing the package, you will find Azure OpenAI menus available in the main menu.
 
-![Main Menu](https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/2a8c1d2e-0505-487c-819d-6c9dd1d2184e)
+<img width="327" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/e3435775-a340-4ce4-9979-3f9f4f673e0f">
+
+
 
 ## Prompt Completions
 
@@ -123,3 +126,27 @@ Here is a complete config structure:
 ```
 ## output
 To obtain the result, utilize `${turn.OpenAI}`
+
+
+
+
+## DALL-E
+
+### DALL-E Image Generation
+
+### Prompt Configuration
+
+- **Endpoint:** Connect to OpenAI
+- **API Key:** Your OpenAI API Key
+- **Prompt:** Specify the type of image you want to create.
+- **Image Size:** Desired image resolution size.
+- **Image Count:** Number of images to generate.
+- **User:** A unique identifier representing your end-user, which aids in monitoring and abuse detection.
+
+  <img width="1289" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/21119ef9-7382-4bee-9749-edd8c3688b74">
+
+
+
+## output
+To obtain the result, utilize `${turn.OpenAI}`
+
