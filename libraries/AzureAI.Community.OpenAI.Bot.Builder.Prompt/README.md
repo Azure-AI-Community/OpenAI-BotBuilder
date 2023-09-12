@@ -36,7 +36,8 @@ After installing the package, you will find Azure OpenAI menus available in the 
 
 Prompt Completions: Returns textual completions as configured for a given prompt.
 
-![Prompt Completions](https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/285a6f7e-d4b9-48f6-82d9-5e0aba577659)
+<img width="1293" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/5db4c157-9cb1-4587-9a84-014c64771e02">
+
 
 ### Example
 
@@ -82,7 +83,8 @@ To obtain the result, utilize `${turn.OpenAI}`.
 
 **Description:** Returns chat completions for the provided chat context message.
 
-![Prompt ChatCompletions](https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/4fabe194-81ac-4d41-b628-6f0afe30bc71)
+<img width="1287" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/52b505aa-8935-4f24-83e8-4e32ab0980f3">
+
 
 ## Example
 
@@ -145,7 +147,8 @@ To obtain the result, utilize `${turn.OpenAI}`
 - **Image Count:** Number of images to generate.
 - **User:** A unique identifier representing your end-user, which aids in monitoring and abuse detection.
 
-  <img width="1289" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/21119ef9-7382-4bee-9749-edd8c3688b74">
+  <img width="1291" alt="image" src="https://github.com/Azure-AI-Community/OpenAI-BotBuilder/assets/16264167/bc961cd0-34d7-4c55-b3cc-05ac50f28e94">
+
 
 
 
