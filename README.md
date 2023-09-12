@@ -4,6 +4,8 @@ The Azure-AI-Community/OpenAI-BotBuilder repository contains a Bot Composer pack
 
 # Implementing the Package
 
+Package [Details](https://github.com/Azure-AI-Community/OpenAI-BotBuilder/tree/main/libraries/AzureAI.Community.OpenAI.Bot.Builder.Prompt)
+
 Learn how to implement this package by watching video tutorials available [here](https://www.youtube.com/watch?v=1MqpdFGUYxc&list=PL-PgMmMmma8Dz25wbkXSyio6LbbYZlc0h).
 
 nuget package [here](https://www.nuget.org/packages/AzureAI.Community.OpenAI.Bot.Builder.Prompt/).
