@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Title>AzureAI.Community.OpenAI.Bot.Builder.SuggestionPrompt</Title>
+    <Authors>Azure.AI.Community - Vinoth Rajendran</Authors>
+    <Description>Azure-AI-Community package for Azure OpenAI</Description>
+    <PackageProjectUrl>https://github.com/Azure-AI-Community</PackageProjectUrl>
+    <PackageIcon>azureai.jpeg</PackageIcon>
+    <RepositoryUrl>https://github.com/Azure-AI-Community</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/Azure-AI-Community/Microsoft-Semantic-Kernel-Community-dotnet/blob/main/README.md</PackageReleaseNotes>
+    <PackageId>AzureAI.Community.OpenAI.Bot.Builder.SuggestionPrompt</PackageId>
+    <PackageLicenseUrl>https://github.com/Azure-AI-Community</PackageLicenseUrl>
+    <RootNamespace>AzureAI.Community.OpenAI.Bot.Builder.SuggestionPrompt</RootNamespace>
+    <Company>Azure.AI.Community</Company>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>composer;botframework;botbuilder;msbot-component;msbot-action</PackageTags>
+    <PackAsTool>False</PackAsTool>
+    <license>MIT</license>
+    <Copyright>Azure.AI.Community</Copyright>
+    <Version>1.0.0</Version>
+    <PackageVersion>1.0.0-beta.2</PackageVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\vinot\Downloads\azureai.jpeg">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" Version="1.0.0-beta.8" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.21.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
